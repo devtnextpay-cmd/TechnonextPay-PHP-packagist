@@ -91,6 +91,7 @@ Create `process_payment.php`:
 
 ```php
 <?php
+require_once 'vendor/autoload.php';
 use TechnonextPlugin\TechnonextpayEnvReader;
 use TechnonextPlugin\Technonextpay;
 use TechnonextPlugin\PaymentRequest;
@@ -145,7 +146,7 @@ Create `success.php`:
 
 ```php
 <?php
-
+require_once 'vendor/autoload.php';
 use TechnonextPlugin\Technonextpay;
 use TechnonextPlugin\TechnonextpayEnvReader;
 
