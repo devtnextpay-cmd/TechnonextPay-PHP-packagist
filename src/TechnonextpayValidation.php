@@ -31,65 +31,85 @@ class TechnonextpayValidation
     }
 
     /**
-     * Validate  payload required data
+     * Validate payload required data with detailed error reporting
+     *
+     * @param mixed $payload_data
+     * @return array Returns array with 'valid' boolean and 'errors' array
+     */
+    function ValidationWithDetails($payload_data)
+    {
+        $payload_data = json_decode($payload_data);
+        $errors = [];
+
+        // Check each field and collect errors
+        if (!$this->emptyCheck('Username', $payload_data->security->username ?? null)) {
+            $errors[] = 'Username is required and cannot be empty';
+        }
+        if (!$this->emptyCheck('Password', $payload_data->security->password ?? null)) {
+            $errors[] = 'Password is required and cannot be empty';
+        }
+        if (!$this->emptyCheck('Order ID', $payload_data->order_id ?? null)) {
+            $errors[] = 'Order ID is required and cannot be empty';
+        }
+        if (!$this->emptyCheck('Amount', $payload_data->order_information->payable_amount ?? null)) {
+            $errors[] = 'Amount is required and cannot be empty';
+        }
+        if (!$this->emptyCheck('Currency', $payload_data->order_information->currency_code ?? null)) {
+            $errors[] = 'Currency is required and cannot be empty';
+        }
+        if (!$this->emptyCheck('IPN Url', $payload_data->ipn_url ?? null)) {
+            $errors[] = 'IPN URL is required and cannot be empty';
+        }
+        if (!$this->emptyCheck('Success Url', $payload_data->success_url ?? null)) {
+            $errors[] = 'Success URL is required and cannot be empty';
+        }
+        if (!$this->emptyCheck('Cancel Url', $payload_data->cancel_url ?? null)) {
+            $errors[] = 'Cancel URL is required and cannot be empty';
+        }
+        if (!$this->emptyCheck('Failure Url', $payload_data->failure_url ?? null)) {
+            $errors[] = 'Failure URL is required and cannot be empty';
+        }
+        if (!$this->emptyCheck('Customer Name', $payload_data->customer_information->name ?? null)) {
+            $errors[] = 'Customer Name is required and cannot be empty';
+        }
+        if (!$this->phoneCheck($payload_data->customer_information->contact_number ?? null)) {
+            $errors[] = 'Phone number must be exactly 11 digits and contain only numbers';
+        }
+        if (!$this->emailCheck($payload_data->customer_information->email ?? null)) {
+            $errors[] = 'Email address is invalid';
+        }
+        if (!$this->emptyCheck('Customer Primary Address', $payload_data->customer_information->primaryAddress ?? null)) {
+            $errors[] = 'Customer Primary Address is required and cannot be empty';
+        }
+        if (!$this->emptyCheck('Customer City', $payload_data->customer_information->city ?? null)) {
+            $errors[] = 'Customer City is required and cannot be empty';
+        }
+        if (!$this->emptyCheck('Customer State', $payload_data->customer_information->state ?? null)) {
+            $errors[] = 'Customer State is required and cannot be empty';
+        }
+        if (!$this->emptyCheck('Customer Postcode', $payload_data->customer_information->postcode ?? null)) {
+            $errors[] = 'Customer Postcode is required and cannot be empty';
+        }
+        if (!$this->emptyCheck('Customer Country', $payload_data->customer_information->country ?? null)) {
+            $errors[] = 'Customer Country is required and cannot be empty';
+        }
+
+        return [
+            'valid' => empty($errors),
+            'errors' => $errors
+        ];
+    }
+
+    /**
+     * Validate  payload required data (legacy method for backward compatibility)
      *
      * @param mixed $payload_data
      * This is a validation method whitch has all of payload data and it sends data for null & formate validation.
      */
     function Validation($payload_data)
     {
-        $payload_data = (json_decode($payload_data));
-        // echo "<pre>";
-        // print_r($payload_data->customer_information);exit;
-
-        return ($this->emptyCheck(
-            'Username', $payload_data->security->username
-        ) && $this->emptyCheck(
-            'Password', $payload_data->security->password
-        ) && $this->emptyCheck(
-            'Order ID',
-            $payload_data->order_id
-        ) && $this->emptyCheck(
-            'Amount',
-            $payload_data->order_information->payable_amount
-        ) && $this->emptyCheck(
-            'Currency',
-            $payload_data->order_information->currency_code
-        ) && $this->emptyCheck(
-            'IPN Url',
-            $payload_data->ipn_url
-        ) && $this->emptyCheck(
-            'Success Url',
-            $payload_data->success_url
-        ) && $this->emptyCheck(
-            'Cancel Url',
-            $payload_data->cancel_url
-        ) && $this->emptyCheck(
-            'Failure Url',
-            $payload_data->failure_url
-        ) && $this->emptyCheck(
-            'Customer Name',
-            $payload_data->customer_information->name
-        ) && $this->phoneCheck(
-            $payload_data->customer_information->contact_number
-        ) && $this->emailCheck(         
-            $payload_data->customer_information->email
-        ) && $this->emptyCheck(
-            'Customer Primary Address',
-            $payload_data->customer_information->primaryAddress
-        ) && $this->emptyCheck(
-            'Customer City',
-            $payload_data->customer_information->city
-        ) && $this->emptyCheck(
-            'Customer State',
-            $payload_data->customer_information->state
-        ) && $this->emptyCheck(
-            'Customer Postcode',
-            $payload_data->customer_information->postcode
-        ) && $this->emptyCheck(
-            'Customer Country',
-            $payload_data->customer_information->country
-        ));
+        $result = $this->ValidationWithDetails($payload_data);
+        return $result['valid'];
     }
 
 

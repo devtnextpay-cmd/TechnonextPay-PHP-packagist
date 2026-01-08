@@ -257,6 +257,8 @@ composer require technonext/technonext-plugin-php
 Or manually include the plugin files:
 
 ```php
+require_once 'vendor/autoload.php';
+
 require_once 'src/TechnonextpayEnvReader.php';
 require_once 'src/Technonextpay.php';
 require_once 'src/PaymentRequest.php';
@@ -282,6 +284,8 @@ require_once 'src/PaymentRequest.php';
 
 ```php
 <?php
+require_once 'vendor/autoload.php';
+
 use TechnonextPlugin\TechnonextpayEnvReader;
 use TechnonextPlugin\Technonextpay;
 use TechnonextPlugin\PaymentRequest;
@@ -320,6 +324,8 @@ try {
 
 ```php
 <?php
+require_once 'vendor/autoload.php';
+
 use TechnonextPlugin\TechnonextpayEnvReader;
 use TechnonextPlugin\Technonextpay;
 
