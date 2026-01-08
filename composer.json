@@ -1,5 +1,5 @@
 {
-    "name": "technonext/technonext-plugin-php",
+    "name": "test-technonext/technonext-plugin-php",
     "description": "TechnoNextPay is a online payment gateway and easy payment solution",
     "type": "library",
     "version": "1.0.0",
