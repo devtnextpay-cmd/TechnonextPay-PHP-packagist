@@ -334,9 +334,7 @@ $technonextpay = new Technonextpay($config);
 
 // Verify payment status
 $verification = $technonextpay->verifyPayment([
-    'order_id' => $_REQUEST['orderId'],
-    'order_tracking_id' => $_REQUEST['orderReference'],
-    'merchant_code' => $config->merchant_code
+    'paymentOrderId' => $_REQUEST['orderReference']
 ]);
 
 if ($verification->status === 'APPROVED') {
