@@ -249,4 +249,3 @@ echo "<p>You can try again when ready.</p>";
 ---
 
 **Happy coding! 🎉**</content>
-<parameter name="filePath">/var/www/html/plugins-working-examples/php-app-plugin/QUICK_START.md
